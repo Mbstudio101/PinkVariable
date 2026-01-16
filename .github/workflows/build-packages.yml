@@ -11,38 +11,43 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Compile
         run: npm run compile
         env:
           NODE_OPTIONS: --max-old-space-size=8192
-      
+
       - name: Download built-in extensions
         run: npm run download-builtin-extensions
-      
+
       - name: Build macOS package
         run: npm run gulp -- vscode-darwin-x64-min
       
       - name: Create DMG
         run: |
-          cd VSCode-darwin-x64
-          hdiutil create -volname "PinkVariable" -srcfolder . -ov -format UDZO ../PinkVariable-macos-x64.dmg
-      
+          if [ -d "VSCode-darwin-x64" ]; then
+            cd VSCode-darwin-x64
+            hdiutil create -volname "PinkVariable" -srcfolder . -ov -format UDZO ../PinkVariable-macos-x64.dmg
+          else
+            echo "Build directory not found, checking for alternative location..."
+            ls -la
+          fi
+
       - name: Upload DMG
         uses: actions/upload-artifact@v4
         with:
           name: PinkVariable-macos-x64
           path: PinkVariable-macos-x64.dmg
-      
+
       - name: Upload to Release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v1
@@ -56,37 +61,52 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Compile
         run: npm run compile
         env:
           NODE_OPTIONS: --max-old-space-size=8192
-      
+
       - name: Download built-in extensions
         run: npm run download-builtin-extensions
-      
+
       - name: Build Windows package
         run: npm run gulp -- vscode-win32-x64-min
+      
+      - name: Find Windows installer
+        id: find-installer
+        run: |
+          if [ -d "VSCode-win32-x64" ]; then
+            echo "Found build directory: VSCode-win32-x64"
+            find VSCode-win32-x64 -name "*.exe" -o -name "*.zip" | head -5
+          else
+            echo "Checking for installer in .build directory..."
+            find .build -name "*.exe" -o -name "*.zip" | head -5
+          fi
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: PinkVariable-win32-x64
-          path: VSCode-win32-x64/**
+          path: |
+            VSCode-win32-x64/**
+            .build/win32-x64/**
       
       - name: Upload to Release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v1
         with:
-          files: VSCode-win32-x64/**
+          files: |
+            VSCode-win32-x64/**
+            .build/win32-x64/**
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
