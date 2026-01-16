@@ -15,27 +15,16 @@ import { ColorScheme } from '../../platform/theme/common/theme.js';
 
 registerThemingParticipant((theme, collector) => {
 
-	// Glassmorphism gradient background for PinkVariable
 	const isDark = theme.type === ColorScheme.DARK || theme.type === ColorScheme.HIGH_CONTRAST_DARK;
 	const isLight = theme.type === ColorScheme.LIGHT || theme.type === ColorScheme.HIGH_CONTRAST_LIGHT;
 
-	let gradientBackground: string;
-	if (isDark) {
-		// Dark theme: Purple to pink gradient
-		gradientBackground = 'linear-gradient(135deg, rgba(30, 20, 40, 0.95) 0%, rgba(70, 30, 80, 0.9) 50%, rgba(50, 20, 60, 0.95) 100%)';
-	} else if (isLight) {
-		// Light theme: Soft pink to lavender gradient
-		gradientBackground = 'linear-gradient(135deg, rgba(255, 240, 250, 0.98) 0%, rgba(250, 235, 255, 0.95) 50%, rgba(245, 230, 250, 0.98) 100%)';
-	} else {
-		const workbenchBackground = WORKBENCH_BACKGROUND(theme);
-		gradientBackground = workbenchBackground.toString();
-	}
+	// Use standard workbench background (no gradient)
+	const workbenchBackground = WORKBENCH_BACKGROUND(theme);
+	const backgroundColor = workbenchBackground.toString();
 
 	collector.addRule(`
 		.monaco-workbench {
-			background: ${gradientBackground};
-			backdrop-filter: blur(20px) saturate(180%);
-			-webkit-backdrop-filter: blur(20px) saturate(180%);
+			background: ${backgroundColor};
 		}
 
 		/* Glassmorphism effect for panels and sidebars */
