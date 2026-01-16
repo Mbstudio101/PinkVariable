@@ -31,7 +31,7 @@ jobs:
 
       - name: Build macOS package
         run: npm run gulp -- vscode-darwin-x64-min
-      
+
       - name: Create DMG
         run: |
           if [ -d "VSCode-darwin-x64" ]; then
@@ -81,7 +81,7 @@ jobs:
 
       - name: Build Windows package
         run: npm run gulp -- vscode-win32-x64-min
-      
+
       - name: Find Windows installer
         id: find-installer
         run: |
@@ -92,7 +92,7 @@ jobs:
             echo "Checking for installer in .build directory..."
             find .build -name "*.exe" -o -name "*.zip" | head -5
           fi
-      
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -100,7 +100,7 @@ jobs:
           path: |
             VSCode-win32-x64/**
             .build/win32-x64/**
-      
+
       - name: Upload to Release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v1

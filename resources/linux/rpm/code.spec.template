@@ -6,7 +6,7 @@ Group:    Development/Tools
 Vendor:   PinkVariable
 Packager: PinkVariable Team
 License:  @@LICENSE@@
-URL:      https://voideditor.com/
+URL:      https://github.com/Mbstudio101/PinkVariable
 Icon:     @@NAME@@.xpm
 Requires: @@DEPENDENCIES@@
 AutoReq:  0
