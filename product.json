@@ -1,8 +1,8 @@
 {
 	"nameShort": "PinkVariable",
 	"nameLong": "PinkVariable",
-	"voidVersion": "1.4.9",
-	"voidRelease": "0044",
+	"pinkVariableVersion": "1.0.0",
+	"pinkVariableRelease": "0001",
 	"applicationName": "pinkvariable",
 	"dataFolderName": ".pinkvariable",
 	"win32MutexName": "pinkvariable",

@@ -191,7 +191,7 @@ ${telemetryText}
 
 ${restartString}
 
-Void separately records basic usage like the number of messages people are sending. If you'd like to disable Void metrics, you may do so in Void's Settings.
+PinkVariable separately records basic usage like the number of messages people are sending. If you'd like to disable PinkVariable metrics, you may do so in PinkVariable's Settings.
 `;
 
 	return telemetryDescription;
