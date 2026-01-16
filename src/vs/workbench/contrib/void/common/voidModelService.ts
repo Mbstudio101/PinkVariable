@@ -44,12 +44,24 @@ class VoidModelService extends Disposable implements IVoidModelService {
 	initializeModel = async (uri: URI) => {
 		try {
 			if (uri.fsPath in this._modelRefOfURI) return;
+			
+			// Skip non-resolvable schemes (like extensions:, inMemory:, etc.)
+			// These are special URIs that don't represent actual file resources
+			const nonResolvableSchemes = ['extensions', 'inMemory', 'command', 'vscode'];
+			if (nonResolvableSchemes.includes(uri.scheme)) {
+				return; // Silently skip these schemes
+			}
+			
 			const editorModelRef = await this._textModelService.createModelReference(uri);
 			// Keep a strong reference to prevent disposal
 			this._modelRefOfURI[uri.fsPath] = editorModelRef;
 		}
 		catch (e) {
-			console.log('InitializeModel error:', e)
+			// Only log if it's not a known non-resolvable scheme
+			const nonResolvableSchemes = ['extensions', 'inMemory', 'command', 'vscode'];
+			if (!nonResolvableSchemes.includes(uri.scheme)) {
+				console.log('InitializeModel error:', e)
+			}
 		}
 	};
 
