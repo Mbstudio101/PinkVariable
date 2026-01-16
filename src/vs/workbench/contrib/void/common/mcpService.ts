@@ -110,10 +110,46 @@ class MCPService extends Disposable implements IMCPService {
 				await this._createMCPConfigFile(mcpConfigUri);
 				console.log('MCP Config file created:', mcpConfigUri.toString());
 			}
+
+			// Automatically configure GitKraken MCP if gk command is available
+			await this._autoConfigureGitKrakenMCP(mcpConfigUri);
+
 			await this._addMCPConfigFileWatcher();
 			await this._refreshMCPServers();
 		} catch (error) {
 			console.error('Error initializing MCPService:', error);
+		}
+	}
+
+	private async _autoConfigureGitKrakenMCP(mcpConfigUri: URI): Promise<void> {
+		try {
+			// Check if GitKraken is already configured
+			const config = await this._parseMCPConfigFile();
+			if (config?.mcpServers?.gitkraken) {
+				return; // Already configured
+			}
+
+			// Check if gk command is available (done via main process)
+			const gkAvailable = await this.channel.call<boolean>('checkCommandAvailable', { command: 'gk' });
+			if (!gkAvailable) {
+				return; // GitKraken CLI not installed
+			}
+
+			// Add GitKraken configuration
+			const currentConfig = config || { mcpServers: {} };
+			currentConfig.mcpServers = currentConfig.mcpServers || {};
+			currentConfig.mcpServers.gitkraken = {
+				command: 'gk',
+				args: ['mcp']
+			};
+
+			// Write updated config
+			const buffer = VSBuffer.fromString(JSON.stringify(currentConfig, null, 2));
+			await this.fileService.writeFile(mcpConfigUri, buffer);
+			console.log('Automatically configured GitKraken MCP server');
+		} catch (error) {
+			// Silently fail - auto-configuration is optional
+			console.debug('Could not auto-configure GitKraken MCP:', error);
 		}
 	}
 

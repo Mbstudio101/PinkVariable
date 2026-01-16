@@ -16,7 +16,6 @@ import { ColorScheme } from '../../platform/theme/common/theme.js';
 registerThemingParticipant((theme, collector) => {
 
 	const isDark = theme.type === ColorScheme.DARK || theme.type === ColorScheme.HIGH_CONTRAST_DARK;
-	const isLight = theme.type === ColorScheme.LIGHT || theme.type === ColorScheme.HIGH_CONTRAST_LIGHT;
 
 	// Use standard workbench background (no gradient)
 	const workbenchBackground = WORKBENCH_BACKGROUND(theme);

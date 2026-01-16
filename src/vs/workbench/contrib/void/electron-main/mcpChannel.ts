@@ -100,6 +100,9 @@ export class MCPChannel implements IServerChannel {
 				const response = await this._safeCallTool(p.serverName, p.toolName, p.params)
 				return response
 			}
+			else if (command === 'checkCommandAvailable') {
+				return await this._checkCommandAvailable(params.command)
+			}
 			else {
 				throw new Error(`Void sendLLM: command "${command}" not recognized.`)
 			}
@@ -345,6 +348,20 @@ export class MCPChannel implements IServerChannel {
 		// }
 
 		throw new Error(`Tool call error: We don\'t support ${returnValue.type} tool response yet for tool ${toolName} on server ${serverName}`)
+	}
+
+	private async _checkCommandAvailable(command: string): Promise<boolean> {
+		const { exec } = await import('child_process');
+		const { promisify } = await import('util');
+		const execAsync = promisify(exec);
+		const platform = process.platform === 'win32' ? 'where' : 'which';
+
+		try {
+			await execAsync(`${platform} ${command}`);
+			return true;
+		} catch {
+			return false;
+		}
 	}
 
 	// tool call error wrapper

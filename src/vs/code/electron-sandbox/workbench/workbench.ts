@@ -42,13 +42,17 @@
 		}
 
 		// minimal color configuration (works with or without persisted data)
-		let baseTheme;
-		let shellBackground;
-		let shellForeground;
+		let baseTheme: string | undefined;
+		let shellBackground: string = '#1E1E1E';
+		let shellForeground: string = '#CCCCCC';
 		if (data) {
 			baseTheme = data.baseTheme;
-			shellBackground = data.colorInfo.editorBackground;
-			shellForeground = data.colorInfo.foreground;
+			if (data.colorInfo.editorBackground) {
+				shellBackground = data.colorInfo.editorBackground;
+			}
+			if (data.colorInfo.foreground) {
+				shellForeground = data.colorInfo.foreground;
+			}
 		} else if (configuration.autoDetectHighContrast && configuration.colorScheme.highContrast) {
 			if (configuration.colorScheme.dark) {
 				baseTheme = 'hc-black';

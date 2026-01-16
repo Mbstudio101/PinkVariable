@@ -1,0 +1,26 @@
+{
+  "name": "theme-luxury-black-gold",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "1.0.0",
+  "publisher": "pinkvariable",
+  "license": "MIT",
+  "engines": {
+    "vscode": "*"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "id": "Luxury Black And Gold",
+        "label": "%themeLabel%",
+        "uiTheme": "vs-dark",
+        "path": "./themes/luxury-black-gold-color-theme.json"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mbstudio101/PinkVariable.git"
+  }
+}
