@@ -1,0 +1,92 @@
+name: Build Packages
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    name: Build macOS DMG
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Compile
+        run: npm run compile
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+      
+      - name: Download built-in extensions
+        run: npm run download-builtin-extensions
+      
+      - name: Build macOS package
+        run: npm run gulp -- vscode-darwin-x64-min
+      
+      - name: Create DMG
+        run: |
+          cd VSCode-darwin-x64
+          hdiutil create -volname "PinkVariable" -srcfolder . -ov -format UDZO ../PinkVariable-macos-x64.dmg
+      
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: PinkVariable-macos-x64
+          path: PinkVariable-macos-x64.dmg
+      
+      - name: Upload to Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PinkVariable-macos-x64.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-windows:
+    name: Build Windows EXE
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Compile
+        run: npm run compile
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+      
+      - name: Download built-in extensions
+        run: npm run download-builtin-extensions
+      
+      - name: Build Windows package
+        run: npm run gulp -- vscode-win32-x64-min
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: PinkVariable-win32-x64
+          path: VSCode-win32-x64/**
+      
+      - name: Upload to Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: VSCode-win32-x64/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
