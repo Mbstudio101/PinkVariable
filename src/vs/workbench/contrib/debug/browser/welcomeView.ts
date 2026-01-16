@@ -169,7 +169,7 @@ viewsRegistry.registerViewWelcomeContent(WelcomeView.ID, {
 });
 
 viewsRegistry.registerViewWelcomeContent(WelcomeView.ID, {
-	content: localize('allDebuggersDisabled', "All debug extensions are disabled. Enable a debug extension or install a new one from the Marketplace."),
+	content: localize('allDebuggersDisabled', "No debug extensions are available. Install a debug extension from the Extensions Marketplace to start debugging your code."),
 	when: CONTEXT_DEBUG_EXTENSION_AVAILABLE.toNegated(),
 	group: ViewContentGroups.Debug
 });
