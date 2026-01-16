@@ -110,7 +110,17 @@ export class PartsSplash {
 	private _removePartsSplash(): void {
 		const element = mainWindow.document.getElementById(PartsSplash._splashElementId);
 		if (element) {
-			element.style.display = 'none';
+			// Fade out PinkVariable splash overlay first
+			const pinkVariableSplash = mainWindow.document.getElementById('pinkvariable-splash-overlay');
+			if (pinkVariableSplash) {
+				pinkVariableSplash.style.transition = 'opacity 0.3s ease-out';
+				pinkVariableSplash.style.opacity = '0';
+				setTimeout(() => {
+					element.style.display = 'none';
+				}, 300);
+			} else {
+				element.style.display = 'none';
+			}
 		}
 
 		// remove initial colors

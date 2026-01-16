@@ -89,6 +89,86 @@
 			splash.id = 'monaco-parts-splash';
 			splash.className = baseTheme ?? 'vs-dark';
 
+			// PinkVariable branded splash overlay
+			const pinkVariableSplash = document.createElement('div');
+			pinkVariableSplash.id = 'pinkvariable-splash-overlay';
+			pinkVariableSplash.style.cssText = `
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				z-index: 10000;
+				background-color: ${shellBackground};
+			`;
+
+			// PinkVariable logo container (using CSS background for better compatibility)
+			const logoContainer = document.createElement('div');
+			logoContainer.style.cssText = `
+				width: 120px;
+				height: 120px;
+				margin-bottom: 24px;
+				opacity: 0;
+				animation: fadeIn 0.6s ease-in-out forwards;
+				background-image: url('./vs/workbench/browser/parts/editor/media/pinkvariable-logo.png');
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+			`;
+			// Fallback if image doesn't load
+			logoContainer.onerror = () => {
+				logoContainer.style.background = 'none';
+				logoContainer.style.border = `3px solid ${shellForeground}`;
+				logoContainer.style.borderRadius = '50%';
+			};
+
+			// App name
+			const appName = document.createElement('div');
+			appName.textContent = 'PinkVariable';
+			appName.style.cssText = `
+				font-size: 28px;
+				font-weight: 300;
+				color: ${shellForeground};
+				margin-bottom: 16px;
+				opacity: 0;
+				animation: fadeIn 0.6s ease-in-out 0.2s forwards;
+			`;
+
+			// Loading indicator
+			const loadingIndicator = document.createElement('div');
+			loadingIndicator.style.cssText = `
+				width: 40px;
+				height: 40px;
+				border: 3px solid ${shellForeground}33;
+				border-top-color: ${shellForeground};
+				border-radius: 50%;
+				animation: spin 1s linear infinite;
+				opacity: 0;
+				animation: fadeIn 0.6s ease-in-out 0.4s forwards, spin 1s linear 0.4s infinite;
+			`;
+
+			// Add CSS animations
+			const style = document.createElement('style');
+			style.textContent = `
+				@keyframes fadeIn {
+					from { opacity: 0; transform: translateY(10px); }
+					to { opacity: 1; transform: translateY(0); }
+				}
+				@keyframes spin {
+					to { transform: rotate(360deg); }
+				}
+			`;
+			document.head.appendChild(style);
+
+			pinkVariableSplash.appendChild(logoContainer);
+			pinkVariableSplash.appendChild(appName);
+			pinkVariableSplash.appendChild(loadingIndicator);
+			splash.appendChild(pinkVariableSplash);
+
 			if (layoutInfo.windowBorder && colorInfo.windowBorder) {
 				const borderElement = document.createElement('div');
 				borderElement.style.position = 'absolute';
