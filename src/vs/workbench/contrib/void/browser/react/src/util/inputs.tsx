@@ -753,13 +753,18 @@ export const VoidInputBox2 = forwardRef<HTMLTextAreaElement, InputBox2Props>(fun
 
 			disabled={!isEnabled}
 
-			className={`w-full resize-none max-h-[500px] overflow-y-auto text-void-fg-1 placeholder:text-void-fg-3 ${className}`}
+			className={`
+				void-input void-textarea
+				w-full resize-none max-h-[500px] overflow-y-auto
+				text-void-fg-1 placeholder:text-void-fg-3
+				${className}
+			`}
 			style={{
 				// defaultInputBoxStyles
 				background: asCssVariable(inputBackground),
 				color: asCssVariable(inputForeground)
 				// inputBorder: asCssVariable(inputBorder),
-			}}
+			} as React.CSSProperties}
 
 			onInput={useCallback((event: React.FormEvent<HTMLTextAreaElement>) => {
 				const latestChange = (event.nativeEvent as InputEvent).data;

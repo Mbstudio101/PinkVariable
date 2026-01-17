@@ -1008,15 +1008,17 @@ const MCPServersList = () => {
 
 	let content: React.ReactNode
 	if (mcpServiceState.error) {
-		content = <div className="text-void-fg-3 text-sm mt-2">
-			{mcpServiceState.error}
+		content = <div className="void-empty-state">
+			<div className="void-empty-state-title">Error Loading MCP Servers</div>
+			<div className="void-empty-state-description">{mcpServiceState.error}</div>
 		</div>
 	}
 	else {
 		const entries = Object.entries(mcpServiceState.mcpServerOfName)
 		if (entries.length === 0) {
-			content = <div className="text-void-fg-3 text-sm mt-2">
-				No servers found
+			content = <div className="void-empty-state">
+				<div className="void-empty-state-title">No MCP Servers Found</div>
+				<div className="void-empty-state-description">Configure MCP servers in your settings to enable additional features.</div>
 			</div>
 		}
 		else {

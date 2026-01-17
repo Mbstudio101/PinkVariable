@@ -9,6 +9,56 @@ module.exports = {
 	content: ['./src2/**/*.{jsx,tsx}'], // uses these files to decide how to transform the css file
 	theme: {
 		extend: {
+			spacing: {
+				'0': 'var(--void-spacing-0)',
+				'1': 'var(--void-spacing-1)',
+				'2': 'var(--void-spacing-2)',
+				'3': 'var(--void-spacing-3)',
+				'4': 'var(--void-spacing-4)',
+				'5': 'var(--void-spacing-5)',
+				'6': 'var(--void-spacing-6)',
+				'8': 'var(--void-spacing-8)',
+				'10': 'var(--void-spacing-10)',
+				'12': 'var(--void-spacing-12)',
+				'16': 'var(--void-spacing-16)',
+				'20': 'var(--void-spacing-20)',
+				'24': 'var(--void-spacing-24)',
+				'32': 'var(--void-spacing-32)',
+			},
+			borderRadius: {
+				'none': 'var(--void-radius-none)',
+				'sm': 'var(--void-radius-sm)',
+				'DEFAULT': 'var(--void-radius-md)',
+				'md': 'var(--void-radius-md)',
+				'lg': 'var(--void-radius-lg)',
+				'xl': 'var(--void-radius-xl)',
+				'2xl': 'var(--void-radius-2xl)',
+				'full': 'var(--void-radius-full)',
+			},
+			boxShadow: {
+				'sm': 'var(--void-shadow-sm)',
+				'DEFAULT': 'var(--void-shadow-md)',
+				'md': 'var(--void-shadow-md)',
+				'lg': 'var(--void-shadow-lg)',
+				'xl': 'var(--void-shadow-xl)',
+				'elevation-0': 'var(--void-shadow-elevation-0)',
+				'elevation-1': 'var(--void-shadow-elevation-1)',
+				'elevation-2': 'var(--void-shadow-elevation-2)',
+				'elevation-3': 'var(--void-shadow-elevation-3)',
+			},
+			transitionDuration: {
+				'fast': 'var(--void-motion-fast)',
+				'DEFAULT': 'var(--void-motion-normal)',
+				'normal': 'var(--void-motion-normal)',
+				'slow': 'var(--void-motion-slow)',
+				'slower': 'var(--void-motion-slower)',
+			},
+			transitionTimingFunction: {
+				'standard': 'var(--void-easing-standard)',
+				'decelerate': 'var(--void-easing-decelerate)',
+				'accelerate': 'var(--void-easing-accelerate)',
+				'sharp': 'var(--void-easing-sharp)',
+			},
 			typography: theme => ({
 				DEFAULT: {
 					css: {

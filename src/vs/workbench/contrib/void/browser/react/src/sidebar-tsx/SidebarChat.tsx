@@ -421,23 +421,43 @@ export const ButtonSubmit = ({ className, disabled, ...props }: ButtonProps & Re
 
 	return <button
 		type='button'
-		className={`rounded-full flex-shrink-0 flex-grow-0 flex items-center justify-center
-			${disabled ? 'bg-vscode-disabled-fg cursor-default' : 'bg-white cursor-pointer'}
+		className={`
+			void-btn void-btn-icon
+			rounded-full flex-shrink-0 flex-grow-0 flex items-center justify-center
+			min-w-[var(--void-min-touch-target)] min-h-[var(--void-min-touch-target)]
+			${disabled
+				? 'bg-vscode-disabled-fg cursor-default opacity-50'
+				: 'bg-white dark:bg-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-100 active:scale-95'
+			}
+			shadow-elevation-1 hover:shadow-elevation-2
+			transition-all duration-normal
+			focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+			focus-visible:outline-[var(--void-ring-color)]
 			${className}
 		`}
+		disabled={disabled}
 		// data-tooltip-id='void-tooltip'
 		// data-tooltip-content={'Send'}
 		// data-tooltip-place='left'
 		{...props}
 	>
-		<IconArrowUp size={DEFAULT_BUTTON_SIZE} className="stroke-[2] p-[2px]" />
+		<IconArrowUp size={DEFAULT_BUTTON_SIZE} className="stroke-[2] p-[2px] stroke-black dark:stroke-black" />
 	</button>
 }
 
 export const ButtonStop = ({ className, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) => {
 	return <button
-		className={`rounded-full flex-shrink-0 flex-grow-0 cursor-pointer flex items-center justify-center
-			bg-white
+		className={`
+			void-btn void-btn-icon
+			rounded-full flex-shrink-0 flex-grow-0 cursor-pointer flex items-center justify-center
+			min-w-[var(--void-min-touch-target)] min-h-[var(--void-min-touch-target)]
+			bg-white dark:bg-void-bg-1
+			hover:bg-gray-100 dark:hover:bg-void-bg-2
+			active:scale-95
+			shadow-elevation-1 hover:shadow-elevation-2
+			transition-all duration-normal
+			focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+			focus-visible:outline-[var(--void-ring-color)]
 			${className}
 		`}
 		type='button'
@@ -3101,7 +3121,7 @@ export const SidebarChat = () => {
 		].map((text, index) => (
 			<div
 				key={index}
-				className='py-1 px-2 rounded text-sm bg-zinc-700/5 hover:bg-zinc-700/10 dark:bg-zinc-300/5 dark:hover:bg-zinc-300/10 cursor-pointer opacity-80 hover:opacity-100'
+				className='void-chip py-1 px-2 rounded text-sm cursor-pointer opacity-80 hover:opacity-100 transition-all duration-fast'
 				onClick={() => onSubmit(text)}
 			>
 				{text}

@@ -7,7 +7,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * ============================================================================
+ * DESIGN TOKEN SYSTEM
+ * ============================================================================
+ * Centralized design tokens for consistent UI across the application.
+ * All tokens are CSS variables that can be referenced in components.
+ */
+
 & {
+	/* ------------------------------------------------------------------------
+	 * Color Tokens - Surfaces & Backgrounds
+	 * ------------------------------------------------------------------------ */
 	--void-bg-1: var(--vscode-input-background);
 	--void-bg-1-alt: var(--vscode-badge-background);
 	--void-bg-2: var(--vscode-sideBar-background);
@@ -15,28 +26,158 @@
 	--void-bg-2-hover: color-mix(in srgb, var(--vscode-editor-foreground) 2%, var(--vscode-sideBar-background) 98%);
 	--void-bg-3: var(--vscode-editor-background);
 
+	/* Surface overlays for cards/panels */
+	--void-surface-elevation-0: var(--void-bg-1);
+	--void-surface-elevation-1: color-mix(in srgb, var(--void-bg-2) 95%, transparent 5%);
+	--void-surface-elevation-2: color-mix(in srgb, var(--void-bg-2) 90%, transparent 10%);
+	--void-surface-elevation-3: color-mix(in srgb, var(--void-bg-2) 85%, transparent 15%);
+
+	/* ------------------------------------------------------------------------
+	 * Color Tokens - Text & Foreground
+	 * ------------------------------------------------------------------------ */
 	--void-fg-0: color-mix(in srgb, var(--vscode-tab-activeForeground) 90%, black 10%);
 	--void-fg-1: var(--vscode-editor-foreground);
 	--void-fg-2: var(--vscode-input-foreground);
 	--void-fg-3: var(--vscode-input-placeholderForeground);
-	/* --void-fg-4: var(--vscode-tab-inactiveForeground); */
 	--void-fg-4: var(--vscode-list-deemphasizedForeground);
 
-	--void-warning: var(--vscode-charts-yellow);
+	/* Semantic text colors */
+	--void-text-primary: var(--void-fg-1);
+	--void-text-secondary: var(--void-fg-2);
+	--void-text-tertiary: var(--void-fg-3);
+	--void-text-disabled: var(--void-fg-4);
 
+	/* ------------------------------------------------------------------------
+	 * Color Tokens - Borders & Dividers
+	 * ------------------------------------------------------------------------ */
 	--void-border-1: var(--vscode-commandCenter-activeBorder);
 	--void-border-2: var(--vscode-commandCenter-border);
 	--void-border-3: var(--vscode-commandCenter-inactiveBorder);
 	--void-border-4: var(--vscode-editorGroup-border);
 
-	--void-ring-color: #007FD4;
-	--void-link-color: #007FD4;
+	/* Border opacity variants */
+	--void-border-subtle: color-mix(in srgb, var(--void-border-2) 40%, transparent 60%);
+	--void-border-default: color-mix(in srgb, var(--void-border-2) 60%, transparent 40%);
+	--void-border-strong: var(--void-border-2);
+
+	/* ------------------------------------------------------------------------
+	 * Color Tokens - Accents & Interactive
+	 * ------------------------------------------------------------------------ */
+	--void-accent-primary: var(--vscode-button-background);
+	--void-accent-primary-hover: var(--vscode-button-hoverBackground);
+	--void-accent-secondary: var(--vscode-button-secondaryBackground);
+	--void-accent-secondary-hover: var(--vscode-button-secondaryHoverBackground);
+
+	--void-ring-color: var(--vscode-focusBorder, #007FD4);
+	--void-ring-color-soft: color-mix(in srgb, var(--void-ring-color) 30%, transparent 70%);
+	--void-link-color: var(--vscode-textLink-foreground, #007FD4);
+	--void-link-color-hover: var(--vscode-textLink-activeForeground, #0066CC);
+
+	/* Semantic colors */
+	--void-success: var(--vscode-charts-green, #4caf50);
+	--void-warning: var(--vscode-charts-yellow, #ff9800);
+	--void-error: var(--vscode-errorForeground, #f44336);
+	--void-info: var(--vscode-textLink-foreground, #2196f3);
+
+	/* ------------------------------------------------------------------------
+	 * Spacing Scale (4px base unit)
+	 * ------------------------------------------------------------------------ */
+	--void-spacing-0: 0px;
+	--void-spacing-1: 2px;    /* 0.5 unit */
+	--void-spacing-2: 4px;    /* 1 unit */
+	--void-spacing-3: 6px;    /* 1.5 units */
+	--void-spacing-4: 8px;    /* 2 units */
+	--void-spacing-5: 10px;   /* 2.5 units */
+	--void-spacing-6: 12px;   /* 3 units */
+	--void-spacing-8: 16px;   /* 4 units */
+	--void-spacing-10: 20px;  /* 5 units */
+	--void-spacing-12: 24px;  /* 6 units */
+	--void-spacing-16: 32px;  /* 8 units */
+	--void-spacing-20: 40px;  /* 10 units */
+	--void-spacing-24: 48px;  /* 12 units */
+	--void-spacing-32: 64px;  /* 16 units */
+
+	/* ------------------------------------------------------------------------
+	 * Border Radius Scale
+	 * ------------------------------------------------------------------------ */
+	--void-radius-none: 0px;
+	--void-radius-sm: 4px;
+	--void-radius-md: 6px;
+	--void-radius-lg: 8px;
+	--void-radius-xl: 12px;
+	--void-radius-2xl: 16px;
+	--void-radius-full: 9999px;
+
+	/* ------------------------------------------------------------------------
+	 * Shadow & Elevation
+	 * ------------------------------------------------------------------------ */
+	--void-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--void-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--void-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	--void-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+	/* Theme-aware shadows (subtle for dark, stronger for light) */
+	--void-shadow-elevation-0: none;
+	--void-shadow-elevation-1: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+	--void-shadow-elevation-2: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23);
+	--void-shadow-elevation-3: 0 10px 20px 0 rgba(0, 0, 0, 0.19), 0 6px 6px 0 rgba(0, 0, 0, 0.23);
+
+	/* ------------------------------------------------------------------------
+	 * Motion & Transitions
+	 * ------------------------------------------------------------------------ */
+	--void-motion-fast: 150ms;
+	--void-motion-normal: 200ms;
+	--void-motion-slow: 250ms;
+	--void-motion-slower: 300ms;
+
+	/* Easing functions */
+	--void-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+	--void-easing-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
+	--void-easing-accelerate: cubic-bezier(0.4, 0.0, 1, 1);
+	--void-easing-sharp: cubic-bezier(0.4, 0.0, 0.6, 1);
+
+	/* ------------------------------------------------------------------------
+	 * Typography (handled via Tailwind config, but keeping for reference)
+	 * ------------------------------------------------------------------------ */
+	--void-font-size-xs: 10px;
+	--void-font-size-sm: 11px;
+	--void-font-size-base: 13px;
+	--void-font-size-lg: 14px;
+	--void-font-size-xl: 16px;
+	--void-font-size-2xl: 18px;
+	--void-font-size-3xl: 20px;
+	--void-font-size-4xl: 24px;
+	--void-font-size-5xl: 30px;
+
+	--void-font-weight-light: 300;
+	--void-font-weight-normal: 400;
+	--void-font-weight-medium: 500;
+	--void-font-weight-semibold: 600;
+	--void-font-weight-bold: 700;
+
+	/* ------------------------------------------------------------------------
+	 * Focus & Accessibility
+	 * ------------------------------------------------------------------------ */
+	--void-focus-ring-width: 2px;
+	--void-focus-ring-offset: 2px;
+	--void-focus-ring: var(--void-focus-ring-width) solid var(--void-ring-color);
+	--void-focus-ring-offset: var(--void-focus-ring-offset) solid transparent;
+
+	/* Minimum click target size for accessibility */
+	--void-min-touch-target: 36px;
+	--void-min-click-target: 40px;
 }
+
+/* ============================================================================
+ * COMPONENT UTILITIES
+ * ============================================================================
+ * Reusable component styles using design tokens.
+ */
 
 .select-child-restyle select {
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	padding-right: 24px;
+	padding-right: var(--void-spacing-6);
 }
 
 .void-force-child-placeholder-void-fg-1 ::placeholder {
@@ -47,55 +188,467 @@
 	outline: none !important;
 }
 
-
-
 .inherit-bg-all-restyle > * {
 	background-color: inherit !important;
 }
-
 
 .bg-editor-style-override {
 	--vscode-sideBar-background: var(--vscode-editor-background);
 }
 
+/* ============================================================================
+ * BUTTON COMPONENTS
+ * ============================================================================ */
 
+.void-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--void-spacing-2);
 
-/* html {
-	font-size: var(--vscode-font-size);
-}
+	min-height: var(--void-min-touch-target);
+	min-width: var(--void-min-touch-target);
 
-.btn {
-	@apply cursor-pointer transition-colors;
+	padding: var(--void-spacing-2) var(--void-spacing-4);
 
-	&.btn-primary {
-		@apply bg-vscode-button-bg text-vscode-button-fg;
+	font-size: var(--void-font-size-base);
+	font-weight: var(--void-font-weight-medium);
+	line-height: 1.5;
+	text-align: center;
+	white-space: nowrap;
 
-		&:not(:disabled) {
-			@apply hover:bg-vscode-button-hoverBg;
-		}
-	}
+	border: 1px solid transparent;
+	border-radius: var(--void-radius-md);
 
-	&.btn-sm {
-		@apply px-3 py-1 text-sm;
-	}
+	cursor: pointer;
+	user-select: none;
 
-	&.btn-secondary {
-		@apply bg-vscode-button-secondary-bg text-vscode-button-secondary-fg;
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
 
-		&:not(:disabled) {
-			@apply hover:bg-vscode-button-secondary-hoverBg;
-		}
+	&:focus-visible {
+		outline: var(--void-focus-ring);
+		outline-offset: var(--void-focus-ring-offset);
 	}
 
 	&:disabled {
-		@apply opacity-75 cursor-not-allowed;
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	&:not(:disabled):active {
+		transform: translateY(1px);
 	}
 }
 
-.input {
-	@apply bg-vscode-input-bg text-vscode-input-fg border-vscode-input-border focus:outline-vscode-focus-border;
+/* Primary Button */
+.void-btn-primary {
+	background-color: var(--void-accent-primary);
+	color: var(--vscode-button-foreground, white);
+
+	&:not(:disabled):hover {
+		background-color: var(--void-accent-primary-hover);
+	}
+
+	&:not(:disabled):active {
+		background-color: var(--void-accent-primary-hover);
+		box-shadow: var(--void-shadow-elevation-1);
+	}
 }
 
-.dropdown {
-	@apply bg-vscode-dropdown-bg text-vscode-dropdown-foreground border-vscode-dropdown-border focus:outline-vscode-focus-border;
-} */
+/* Secondary Button */
+.void-btn-secondary {
+	background-color: var(--void-accent-secondary);
+	color: var(--vscode-button-secondaryForeground);
+	border-color: var(--void-border-default);
+
+	&:not(:disabled):hover {
+		background-color: var(--void-accent-secondary-hover);
+		border-color: var(--void-border-strong);
+	}
+
+	&:not(:disabled):active {
+		background-color: var(--void-accent-secondary-hover);
+		box-shadow: var(--void-shadow-elevation-1);
+	}
+}
+
+/* Ghost Button */
+.void-btn-ghost {
+	background-color: transparent;
+	color: var(--void-text-primary);
+
+	&:not(:disabled):hover {
+		background-color: var(--void-bg-2-hover);
+	}
+
+	&:not(:disabled):active {
+		background-color: var(--void-bg-2-hover);
+	}
+}
+
+/* Destructive Button */
+.void-btn-destructive {
+	background-color: var(--void-error);
+	color: white;
+
+	&:not(:disabled):hover {
+		background-color: color-mix(in srgb, var(--void-error) 90%, black 10%);
+	}
+
+	&:not(:disabled):active {
+		background-color: color-mix(in srgb, var(--void-error) 85%, black 15%);
+		box-shadow: var(--void-shadow-elevation-1);
+	}
+}
+
+/* Button Sizes */
+.void-btn-sm {
+	min-height: 32px;
+	padding: var(--void-spacing-1) var(--void-spacing-3);
+	font-size: var(--void-font-size-sm);
+}
+
+.void-btn-lg {
+	min-height: 44px;
+	padding: var(--void-spacing-3) var(--void-spacing-6);
+	font-size: var(--void-font-size-lg);
+}
+
+/* Icon-only button (circular) */
+.void-btn-icon {
+	padding: var(--void-spacing-2);
+	border-radius: var(--void-radius-full);
+
+	&.void-btn-sm {
+		min-width: 32px;
+		min-height: 32px;
+		padding: var(--void-spacing-2);
+	}
+}
+
+/* ============================================================================
+ * INPUT COMPONENTS
+ * ============================================================================ */
+
+.void-input {
+	width: 100%;
+
+	min-height: var(--void-min-touch-target);
+	padding: var(--void-spacing-2) var(--void-spacing-3);
+
+	font-size: var(--void-font-size-base);
+	font-family: inherit;
+	line-height: 1.5;
+	color: var(--void-text-primary);
+
+	background-color: var(--void-bg-1);
+	border: 1px solid var(--void-border-default);
+	border-radius: var(--void-radius-md);
+
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
+
+	&::placeholder {
+		color: var(--void-text-tertiary);
+	}
+
+	&:hover:not(:disabled):not(:focus) {
+		border-color: var(--void-border-strong);
+	}
+
+	&:focus {
+		outline: none;
+		border-color: var(--void-ring-color);
+		box-shadow: 0 0 0 3px var(--void-ring-color-soft);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		background-color: var(--void-bg-1-alt);
+	}
+
+	&.void-input-error {
+		border-color: var(--void-error);
+
+		&:focus {
+			border-color: var(--void-error);
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--void-error) 20%, transparent 80%);
+		}
+	}
+}
+
+.void-textarea {
+	width: 100%;
+
+	min-height: 80px;
+	padding: var(--void-spacing-2) var(--void-spacing-3);
+
+	font-size: var(--void-font-size-base);
+	font-family: inherit;
+	line-height: 1.5;
+	color: var(--void-text-primary);
+
+	background-color: var(--void-bg-1);
+	border: 1px solid var(--void-border-default);
+	border-radius: var(--void-radius-md);
+
+	resize: vertical;
+
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
+
+	&::placeholder {
+		color: var(--void-text-tertiary);
+	}
+
+	&:hover:not(:disabled):not(:focus) {
+		border-color: var(--void-border-strong);
+	}
+
+	&:focus {
+		outline: none;
+		border-color: var(--void-ring-color);
+		box-shadow: 0 0 0 3px var(--void-ring-color-soft);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		background-color: var(--void-bg-1-alt);
+	}
+
+	&.void-input-error {
+		border-color: var(--void-error);
+
+		&:focus {
+			border-color: var(--void-error);
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--void-error) 20%, transparent 80%);
+		}
+	}
+}
+
+/* ============================================================================
+ * CARD & PANEL COMPONENTS
+ * ============================================================================ */
+
+.void-card {
+	background-color: var(--void-surface-elevation-1);
+	border: 1px solid var(--void-border-subtle);
+	border-radius: var(--void-radius-lg);
+	box-shadow: var(--void-shadow-elevation-1);
+
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
+}
+
+.void-card-hoverable {
+	background-color: var(--void-surface-elevation-1);
+	border: 1px solid var(--void-border-subtle);
+	border-radius: var(--void-radius-lg);
+	box-shadow: var(--void-shadow-elevation-1);
+
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
+
+	&:hover {
+		border-color: var(--void-border-default);
+		box-shadow: var(--void-shadow-elevation-2);
+		transform: translateY(-1px);
+	}
+}
+
+.void-card-elevated {
+	background-color: var(--void-surface-elevation-2);
+	border: 1px solid var(--void-border-subtle);
+	border-radius: var(--void-radius-lg);
+	box-shadow: var(--void-shadow-elevation-2);
+
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
+}
+
+.void-card-interactive {
+	background-color: var(--void-surface-elevation-1);
+	border: 1px solid var(--void-border-subtle);
+	border-radius: var(--void-radius-lg);
+	box-shadow: var(--void-shadow-elevation-1);
+
+	cursor: pointer;
+	transition: all var(--void-motion-normal) var(--void-easing-standard);
+
+	&:hover {
+		border-color: var(--void-border-default);
+		box-shadow: var(--void-shadow-elevation-2);
+		transform: translateY(-1px);
+	}
+
+	&:active {
+		transform: translateY(0);
+		box-shadow: var(--void-shadow-elevation-1);
+	}
+}
+
+.void-panel {
+	background-color: var(--void-surface-elevation-1);
+	border: 1px solid var(--void-border-subtle);
+	border-radius: var(--void-radius-lg);
+	padding: var(--void-spacing-4);
+}
+
+/* ============================================================================
+ * BADGE & CHIP COMPONENTS
+ * ============================================================================ */
+
+.void-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: var(--void-spacing-1) var(--void-spacing-2);
+	min-height: 20px;
+
+	font-size: var(--void-font-size-xs);
+	font-weight: var(--void-font-weight-medium);
+	line-height: 1;
+
+	background-color: var(--void-bg-1-alt);
+	color: var(--void-text-secondary);
+	border-radius: var(--void-radius-full);
+
+	white-space: nowrap;
+}
+
+.void-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--void-spacing-2);
+
+	padding: var(--void-spacing-2) var(--void-spacing-3);
+	min-height: 28px;
+
+	font-size: var(--void-font-size-sm);
+	font-weight: var(--void-font-weight-normal);
+
+	background-color: var(--void-bg-2-hover);
+	color: var(--void-text-primary);
+	border: 1px solid var(--void-border-subtle);
+	border-radius: var(--void-radius-full);
+
+	cursor: pointer;
+	transition: all var(--void-motion-fast) var(--void-easing-standard);
+
+	&:hover {
+		background-color: var(--void-bg-2);
+		border-color: var(--void-border-default);
+	}
+
+	&:active {
+		transform: scale(0.98);
+	}
+}
+
+/* ============================================================================
+ * LIST & TABLE COMPONENTS
+ * ============================================================================ */
+
+.void-list-item {
+	padding: var(--void-spacing-2) var(--void-spacing-3);
+	min-height: var(--void-min-touch-target);
+
+	border-bottom: 1px solid var(--void-border-subtle);
+
+	transition: background-color var(--void-motion-fast) var(--void-easing-standard);
+
+	&:hover {
+		background-color: var(--void-bg-2-hover);
+	}
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	&.void-list-item-active {
+		background-color: var(--void-bg-2-hover);
+		border-left: 3px solid var(--void-ring-color);
+		padding-left: calc(var(--void-spacing-3) - 3px);
+	}
+}
+
+/* ============================================================================
+ * EMPTY STATE
+ * ============================================================================ */
+
+.void-empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--void-spacing-4);
+
+	padding: var(--void-spacing-8) var(--void-spacing-4);
+	text-align: center;
+
+	color: var(--void-text-tertiary);
+}
+
+.void-empty-state-icon {
+	opacity: 0.4;
+	margin-bottom: var(--void-spacing-2);
+}
+
+.void-empty-state-title {
+	font-size: var(--void-font-size-lg);
+	font-weight: var(--void-font-weight-medium);
+	color: var(--void-text-secondary);
+	margin-bottom: var(--void-spacing-1);
+}
+
+.void-empty-state-description {
+	font-size: var(--void-font-size-base);
+	color: var(--void-text-tertiary);
+	max-width: 400px;
+}
+
+/* ============================================================================
+ * SKELETON LOADING
+ * ============================================================================ */
+
+@keyframes void-skeleton-pulse {
+	0%, 100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+.void-skeleton {
+	background: linear-gradient(
+		90deg,
+		var(--void-bg-2-hover) 0%,
+		var(--void-bg-2) 50%,
+		var(--void-bg-2-hover) 100%
+	);
+	background-size: 200% 100%;
+	border-radius: var(--void-radius-sm);
+	animation: void-skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.void-skeleton-text {
+	height: 1em;
+	border-radius: var(--void-radius-sm);
+	margin-bottom: var(--void-spacing-2);
+
+	&:last-child {
+		margin-bottom: 0;
+		width: 60%;
+	}
+}
+
+.void-skeleton-circle {
+	border-radius: var(--void-radius-full);
+	width: 40px;
+	height: 40px;
+}
+
+.void-skeleton-rectangle {
+	height: 80px;
+	border-radius: var(--void-radius-md);
+}

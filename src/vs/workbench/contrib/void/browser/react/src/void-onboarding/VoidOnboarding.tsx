@@ -361,9 +361,19 @@ const OnboardingPageShell = ({ top, bottom, content, hasMaxWidth = true, classNa
 	className?: string,
 }) => {
 	return (
-		<div className={`h-[80vh] text-lg flex flex-col gap-4 w-full mx-auto ${hasMaxWidth ? 'max-w-[600px]' : ''} ${className}`}>
+		<div className={`
+			h-[80vh] text-lg flex flex-col gap-4 w-full mx-auto
+			${hasMaxWidth ? 'max-w-[600px]' : ''}
+			${className}
+		`}>
 			{top && <FadeIn className='w-full mb-auto pt-16'>{top}</FadeIn>}
-			{content && <FadeIn className='w-full my-auto'>{content}</FadeIn>}
+			{content && (
+				<FadeIn className='w-full my-auto'>
+					<div className='void-panel'>
+						{content}
+					</div>
+				</FadeIn>
+			)}
 			{bottom && <div className='w-full pb-8'>{bottom}</div>}
 		</div>
 	)
@@ -422,30 +432,25 @@ const abbreviateNumber = (num: number): string => {
 
 const PrimaryActionButton = ({ children, className, ringSize, ...props }: { children: React.ReactNode, ringSize?: undefined | 'xl' | 'screen' } & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
 
+	const sizeClasses = ringSize === 'xl'
+		? 'gap-2 px-16 py-8 transition-all duration-slow'
+		: ringSize === 'screen'
+		? 'gap-2 px-16 py-8 transition-all duration-slower'
+		: 'gap-1 px-4 py-2 transition-all duration-normal';
 
 	return (
 		<button
 			type='button'
 			className={`
+				void-btn void-btn-primary
 				flex items-center justify-center
-
 				text-white dark:text-black
-				bg-black/90 dark:bg-white/90
-
-				${ringSize === 'xl' ? `
-					gap-2 px-16 py-8
-					transition-all duration-300 ease-in-out
-					`
-					: ringSize === 'screen' ? `
-					gap-2 px-16 py-8
-					transition-all duration-1000 ease-in-out
-					`: ringSize === undefined ? `
-					gap-1 px-4 py-2
-					transition-all duration-300 ease-in-out
-				`: ''}
-
+				bg-black/90 dark:bg-white/90 hover:bg-black dark:hover:bg-white
 				rounded-lg
 				group
+				shadow-elevation-1 hover:shadow-elevation-2
+				focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--void-ring-color)] focus-visible:outline-offset-2
+				${sizeClasses}
 				${className}
 			`}
 			{...props}
@@ -453,8 +458,7 @@ const PrimaryActionButton = ({ children, className, ringSize, ...props }: { chil
 			{children}
 			<ChevronRight
 				className={`
-					transition-all duration-300 ease-in-out
-
+					transition-all duration-normal
 					transform
 					group-hover:translate-x-1
 					group-active:translate-x-1
