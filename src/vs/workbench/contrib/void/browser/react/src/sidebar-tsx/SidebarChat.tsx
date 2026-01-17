@@ -425,9 +425,10 @@ export const ButtonSubmit = ({ className, disabled, ...props }: ButtonProps & Re
 			void-btn void-btn-icon
 			rounded-full flex-shrink-0 flex-grow-0 flex items-center justify-center
 			min-w-[var(--void-min-touch-target)] min-h-[var(--void-min-touch-target)]
+			bg-white dark:bg-white
 			${disabled
-				? 'bg-vscode-disabled-fg cursor-default opacity-50'
-				: 'bg-white dark:bg-white cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-100 active:scale-95'
+				? 'cursor-default opacity-50'
+				: 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-100 active:scale-95'
 			}
 			shadow-elevation-1 hover:shadow-elevation-2
 			transition-all duration-normal
